@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skairesear.ch/schema/sip.schema.json",
+  "title": "SIP header",
+  "type": "object",
+  "required": ["sip", "title", "description", "author", "discussions-to", "status", "type", "created", "summary"],
+  "additionalProperties": false,
+  "properties": {
+    "sip": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string", "minLength": 1, "maxLength": 44 },
+    "description": { "type": "string", "minLength": 1, "maxLength": 140 },
+    "author": { "type": "string", "minLength": 1 },
+    "discussions-to": { "type": "string", "pattern": "^https://forum\\.skairesear\\.ch/t/[a-z0-9-]+/[0-9]+$" },
+    "status": { "enum": ["Draft", "Review", "Last Call", "Final", "Stagnant", "Withdrawn", "Living"] },
+    "last-call-deadline": { "$ref": "#/$defs/date" },
+    "type": { "enum": ["Standards Track", "Meta", "Informational"] },
+    "category": { "enum": ["Core", "Market", "Interface", "Contract"] },
+    "created": { "$ref": "#/$defs/date" },
+    "requires": { "type": "array", "items": { "type": "integer", "minimum": 1 }, "uniqueItems": true, "minItems": 1 },
+    "withdrawal-reason": { "type": "string", "minLength": 1 },
+    "governance-tier": { "enum": [1, 2, 3] },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 600 },
+    "impact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "traders": { "$ref": "#/$defs/line" },
+        "market-makers": { "$ref": "#/$defs/line" },
+        "validators": { "$ref": "#/$defs/line" },
+        "app-developers": { "$ref": "#/$defs/line" },
+        "wallets": { "$ref": "#/$defs/line" },
+        "players": { "$ref": "#/$defs/line" },
+        "holders": { "$ref": "#/$defs/line" }
+      }
+    },
+    "upgrade": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "proposed", "considered", "scheduled", "declined", "included", "rollout", "activation"],
+      "properties": {
+        "version": { "type": "integer", "minimum": 1 },
+        "proposed": { "$ref": "#/$defs/sipList" },
+        "considered": { "$ref": "#/$defs/sipList" },
+        "scheduled": { "$ref": "#/$defs/sipList" },
+        "declined": { "$ref": "#/$defs/sipList" },
+        "included": { "$ref": "#/$defs/sipList" },
+        "rollout": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["date"],
+          "properties": { "date": { "$ref": "#/$defs/dateOrNull" } }
+        },
+        "activation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["height", "date"],
+          "properties": {
+            "height": { "type": ["integer", "null"], "minimum": 1 },
+            "date": { "$ref": "#/$defs/dateOrNull" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "dateOrNull": { "type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "line": { "type": "string", "minLength": 1, "maxLength": 280 },
+    "sipList": { "type": "array", "items": { "type": "integer", "minimum": 1 }, "uniqueItems": true }
+  }
+}
