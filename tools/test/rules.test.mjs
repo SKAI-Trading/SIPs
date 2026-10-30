@@ -38,9 +38,9 @@ describe("checkHeader", () => {
     expect(problems(header({ type: "Informational" }))).toEqual([`${FILE}: only a Standards Track SIP has a category`]);
   });
 
-  it("ties last-call-deadline to Last Call", () => {
-    expect(problems(header({ status: "Last Call", impact: fullImpact() }))).toEqual([`${FILE}: Last Call needs last-call-deadline`]);
-    expect(problems(header({ "last-call-deadline": "2026-12-01" }))).toEqual([`${FILE}: last-call-deadline belongs only to Last Call`]);
+  it("ties final-review-deadline to Final Review", () => {
+    expect(problems(header({ status: "Final Review", impact: fullImpact() }))).toEqual([`${FILE}: Final Review needs final-review-deadline`]);
+    expect(problems(header({ "final-review-deadline": "2026-12-01" }))).toEqual([`${FILE}: final-review-deadline belongs only to Final Review`]);
   });
 
   it("ties withdrawal-reason to Withdrawn", () => {
@@ -86,9 +86,9 @@ describe("checkSections", () => {
     expect(sectionProblems(header(), body)).toEqual([`${FILE}: missing sections Rationale, Security Considerations`]);
   });
 
-  it("wants Test Cases on Core and Market SIPs from Last Call on", () => {
-    const fields = header({ category: "Market", status: "Last Call", "last-call-deadline": "2026-12-01", impact: fullImpact() });
-    expect(sectionProblems(fields)).toEqual([`${FILE}: a Market SIP needs Test Cases from Last Call on`]);
+  it("wants Test Cases on Core and Market SIPs from Final Review on", () => {
+    const fields = header({ category: "Market", status: "Final Review", "final-review-deadline": "2026-12-01", impact: fullImpact() });
+    expect(sectionProblems(fields)).toEqual([`${FILE}: a Market SIP needs Test Cases from Final Review on`]);
     expect(sectionProblems(fields, FULL_BODY.replace("## Copyright", "## Test Cases\n\nVectors.\n\n## Copyright"))).toEqual([]);
   });
 

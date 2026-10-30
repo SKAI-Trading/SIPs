@@ -6,8 +6,8 @@ export const STAGES = ["proposed", "considered", "scheduled", "declined", "inclu
 export const REQUIRED_SECTIONS = ["Abstract", "Motivation", "Specification", "Rationale", "Backwards Compatibility", "Security Considerations", "Copyright"];
 
 const OPEN_STAGES = ["proposed", "considered", "scheduled"];
-const IMPACT_FROM = new Set(["Review", "Last Call", "Final"]);
-const TEST_CASES_FROM = new Set(["Last Call", "Final"]);
+const IMPACT_FROM = new Set(["Review", "Final Review", "Final"]);
+const TEST_CASES_FROM = new Set(["Final Review", "Final"]);
 
 const schema = JSON.parse(readFileSync(new URL("../schema/sip.schema.json", import.meta.url), "utf8"));
 const validate = new Ajv2020({ allErrors: true, allowUnionTypes: true }).compile(schema);
@@ -25,8 +25,8 @@ export function checkHeader(header, file) {
   if (!/\(@[A-Za-z0-9-]+\)/.test(header.author)) say("author needs at least one GitHub handle, as Name (@handle)");
   if (standards && !header.category) say("a Standards Track SIP needs a category");
   if (!standards && header.category) say("only a Standards Track SIP has a category");
-  if (header.status === "Last Call" && !header["last-call-deadline"]) say("Last Call needs last-call-deadline");
-  if (header.status !== "Last Call" && header["last-call-deadline"]) say("last-call-deadline belongs only to Last Call");
+  if (header.status === "Final Review" && !header["final-review-deadline"]) say("Final Review needs final-review-deadline");
+  if (header.status !== "Final Review" && header["final-review-deadline"]) say("final-review-deadline belongs only to Final Review");
   if (header.status === "Withdrawn" && !header["withdrawal-reason"]) say("Withdrawn needs withdrawal-reason");
   if (header.status !== "Withdrawn" && header["withdrawal-reason"]) say("withdrawal-reason belongs only to Withdrawn");
   if (header.status === "Living" && header.type !== "Meta") say("only a Meta SIP can be Living");
@@ -63,7 +63,7 @@ export function checkSections(sip, file) {
   const missing = REQUIRED_SECTIONS.filter((title) => !sections.includes(title));
   if (missing.length) problems.push(`${file}: missing section${missing.length > 1 ? "s" : ""} ${missing.join(", ")}`);
   const needsTestCases = header.type === "Standards Track" && ["Core", "Market"].includes(header.category) && TEST_CASES_FROM.has(header.status);
-  if (needsTestCases && !sections.includes("Test Cases")) problems.push(`${file}: a ${header.category} SIP needs Test Cases from Last Call on`);
+  if (needsTestCases && !sections.includes("Test Cases")) problems.push(`${file}: a ${header.category} SIP needs Test Cases from Final Review on`);
   if (!/\bCC0\b/.test(body)) problems.push(`${file}: the Copyright section must waive rights under CC0`);
   return problems;
 }

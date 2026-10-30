@@ -1,24 +1,24 @@
 const MOVES = {
   Draft: ["Review", "Withdrawn", "Stagnant"],
-  Review: ["Draft", "Last Call", "Withdrawn", "Stagnant"],
-  "Last Call": ["Review", "Final", "Withdrawn", "Stagnant"],
+  Review: ["Draft", "Final Review", "Withdrawn", "Stagnant"],
+  "Final Review": ["Review", "Final", "Withdrawn", "Stagnant"],
   Stagnant: ["Draft", "Review"],
   Final: [],
   Withdrawn: [],
   Living: [],
 };
-const LAST_CALL_DAYS = 14;
+const FINAL_REVIEW_DAYS = 14;
 const DAY_MS = 86_400_000;
 
 export function checkMove(before, after, date) {
   if (before.status === after.status) return null;
   if (!(MOVES[before.status] ?? []).includes(after.status)) return `${before.status} cannot move to ${after.status}`;
-  if (after.status === "Last Call") {
-    const deadline = after["last-call-deadline"];
-    if (!deadline || daysBetween(date, deadline) < LAST_CALL_DAYS) return `Last Call needs a deadline at least ${LAST_CALL_DAYS} days after ${date}`;
+  if (after.status === "Final Review") {
+    const deadline = after["final-review-deadline"];
+    if (!deadline || daysBetween(date, deadline) < FINAL_REVIEW_DAYS) return `Final Review needs a deadline at least ${FINAL_REVIEW_DAYS} days after ${date}`;
   }
-  if (after.status === "Final" && !(date > before["last-call-deadline"])) {
-    return `Final before the Last Call deadline ${before["last-call-deadline"]}`;
+  if (after.status === "Final" && !(date > before["final-review-deadline"])) {
+    return `Final before the Final Review deadline ${before["final-review-deadline"]}`;
   }
   return null;
 }

@@ -44,13 +44,13 @@ Changes to a chain affect people who were not in the room. SIPs put each change 
 
 - **Draft**: merged with a number, in the right format.
 - **Review**: the author asks for review.
-- **Last Call**: the final window, with a `last-call-deadline` at least 14 days after the move. A normative change sends it back to Review.
+- **Final Review**: the final window, with a `final-review-deadline` at least 14 days after the move. A normative change sends it back to Review.
 - **Final**: settled. Only errata and non-normative fixes after this.
-- **Stagnant**: Draft, Review or Last Call with no change for 6 months. An editor sets it; the author or an editor revives it to Draft or Review.
+- **Stagnant**: Draft, Review or Final Review with no change for 6 months. An editor sets it; the author or an editor revives it to Draft or Review.
 - **Withdrawn**: withdrawn by its author, with a `withdrawal-reason`. Permanent for that number.
 - **Living**: a Meta SIP that is never finished, such as this one.
 
-Allowed moves: Draft to Review, Withdrawn or Stagnant. Review to Draft, Last Call, Withdrawn or Stagnant. Last Call to Review, Final (after the deadline), Withdrawn or Stagnant. Stagnant to Draft or Review. Final, Withdrawn and Living do not move.
+Allowed moves: Draft to Review, Withdrawn or Stagnant. Review to Draft, Final Review, Withdrawn or Stagnant. Final Review to Review, Final (after the deadline), Withdrawn or Stagnant. Stagnant to Draft or Review. Final, Withdrawn and Living do not move.
 
 A new SIP enters as Draft. A Meta process document may enter as Living, and the record of an upgrade that already happened may enter as Final.
 
@@ -85,14 +85,14 @@ impact:
 - `title` is at most 44 characters and `description` at most 140; neither repeats the SIP number.
 - At least one author has a GitHub handle, written `Name (@handle)`.
 - `discussions-to` is a thread on forum.skairesear.ch.
-- `category` appears only on Standards Track SIPs; `last-call-deadline` only in Last Call; `withdrawal-reason` only when Withdrawn.
+- `category` appears only on Standards Track SIPs; `final-review-deadline` only in Final Review; `withdrawal-reason` only when Withdrawn.
 - `summary` is plain language for someone who does not read code, at most 600 characters.
 - `impact` has one line for each of `traders`, `market-makers`, `validators`, `app-developers`, `wallets`, `players` and `holders`. On a Standards Track SIP every line is required from Review on. "No change." is an answer; a missing line is not.
 - `governance-tier` is 1, 2 or 3, as defined on offer.skai.trade/governance, when the change needs a governance vote, and absent when it does not.
 
 ### Sections
 
-Every SIP has Abstract, Motivation, Specification, Rationale, Backwards Compatibility, Security Considerations and Copyright, in that order. Core and Market SIPs add Test Cases before Last Call. A Reference Implementation is optional. A SIP without Security Considerations is refused.
+Every SIP has Abstract, Motivation, Specification, Rationale, Backwards Compatibility, Security Considerations and Copyright, in that order. Core and Market SIPs add Test Cases before Final Review. A Reference Implementation is optional. A SIP without Security Considerations is refused.
 
 ### Upgrades
 
@@ -120,11 +120,11 @@ A fix for a vulnerability that is not yet patched on chain 7254 is not published
 
 ## Rationale
 
-The statuses, header and sections follow EIP-1 so that the process is familiar. The upgrade stages follow EIP-7723. The 7-day dark run replaces EIP-7723's testnet run because SKAI ships changes dark behind an activation height and has no hosted testnet. The summary and impact lines bring Forkcast's plain-language view into the SIP itself, written by the author who knows the change best. The decisions log on skairesear.ch is read from this repository's history, so a decision exists only once it is merged.
+The statuses, header and sections follow EIP-1 so that the process is familiar. EIP-1's Last Call is called Final Review here: it is a fixed review window before Final, not a meeting. The upgrade stages follow EIP-7723. The 7-day dark run replaces EIP-7723's testnet run because SKAI ships changes dark behind an activation height and has no hosted testnet. The summary and impact lines bring Forkcast's plain-language view into the SIP itself, written by the author who knows the change best. The decisions log on skairesear.ch is read from this repository's history, so a decision exists only once it is merged.
 
 ## Backwards Compatibility
 
-This is the first SIP. Upgrades before it are recorded after the fact as SIP-2 and SIP-3.
+This is the first SIP. Chain upgrades made before it predate the process and are not recorded as SIPs.
 
 ## Security Considerations
 

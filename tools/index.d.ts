@@ -1,6 +1,6 @@
 import type { ExecFileSyncOptions } from "node:child_process";
 
-export type Status = "Draft" | "Review" | "Last Call" | "Final" | "Stagnant" | "Withdrawn" | "Living";
+export type Status = "Draft" | "Review" | "Final Review" | "Final" | "Stagnant" | "Withdrawn" | "Living";
 export type SipType = "Standards Track" | "Meta" | "Informational";
 export type Category = "Core" | "Market" | "Interface" | "Contract";
 export type Audience = "traders" | "market-makers" | "validators" | "app-developers" | "wallets" | "players" | "holders";
@@ -28,7 +28,7 @@ export interface SipHeader {
   category?: Category;
   created: string;
   requires?: number[];
-  "last-call-deadline"?: string;
+  "final-review-deadline"?: string;
   "withdrawal-reason"?: string;
   "governance-tier"?: 1 | 2 | 3;
   summary: string;

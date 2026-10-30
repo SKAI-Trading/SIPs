@@ -43,7 +43,7 @@ What breaks, for whom, and how they migrate. Write "None." only if nothing does.
 
 ## Test Cases
 
-Required for Core and Market SIPs from Last Call on.
+Required for Core and Market SIPs from Final Review on.
 
 ## Reference Implementation
 
