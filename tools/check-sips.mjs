@@ -15,4 +15,4 @@ if (problems.length > 0) {
   process.exit(1);
 }
 const count = loadTree(repoDir).sips.length;
-console.log(`${count} SIP${count === 1 ? "" : "s"} pass the ${treeOnly ? "tree check" : "tree and history checks"}.`);
+console.log(`${count} SIP${count === 1 ? " passes" : "s pass"} the ${treeOnly ? "tree check" : "tree and history checks"}.`);
