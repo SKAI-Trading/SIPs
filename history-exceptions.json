@@ -1,1 +1,3 @@
-{}
+{
+  "5203e3932f125b1c66be0aab41689af1bd09dea0": "Casey, 2026-10-30: SIP-2, SIP-3 and SIP-4 recorded internal app versions and a list of pending features, not upgrades the chain needs, so they are removed rather than withdrawn (SIP-2 and SIP-3 were Final and cannot be withdrawn). Real upgrades get their own SIPs when they are proposed."
+}
